@@ -24,8 +24,8 @@ spec:
 
     Visit here to learn more: https://github.com/jlesage/docker-jdownloader-2
 
-  upgradeDescription: |
-    
+#  upgradeDescription: |
+#    
   developer: jlesage
   website: https://github.com/jlesage/docker-jdownloader-2
   sourceCode: https://github.com/jlesage/docker-jdownloader-2
