@@ -9,5 +9,8 @@ spec:
     Username: pyload      Password: pyload
 
     Please change those credentials after first login.
+
+    ## Passwords for extracting archives
+    Passwords can be set in Files app unter Application -> Data inside the folder pyload/config/data. Edit the passwords.txt file to add one password per line.
 #  upgradeDescription: |
 #   
