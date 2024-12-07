@@ -23,17 +23,17 @@ spec:
         - name: GROUP_ID
           value: "1000" 
         - name: TZ
-          value: Europe/London
+          value: "Europe/London"
         - name: UMASK
-          value: 000
+          value: "000"
         - name: KEEP_APP_RUNNING
-          value: 1
+          value: "1"
         - name: CLEAN_TMP_DIR
-          value: 1
+          value: "1"
         - name: DISPLAY_WIDTH
-          value: 1920
+          value: "1920"
         - name: DISPLAY_HEIGHT
-          value: 1080
+          value: "1080"
         name: jdownloader2
         image: docker.io/jlesage/jdownloader-2:v24.11.1
         resources:
@@ -41,7 +41,7 @@ spec:
             cpu: 25m
             memory: 400Mi
           limits:
-            # cpu: 500m
+            cpu: 500m
             memory: 1500Mi # extractions
         ports:
         - containerPort: 3129
@@ -85,12 +85,11 @@ spec:
       - name: state
         hostPath:
           type: DirectoryOrCreate
-          path: {{ .Values.userspace.appData }}/jDownloader2
+          path: {{ .Values.userspace.appData }}/JDownloader2
       - name: media
         hostPath:
           type: DirectoryOrCreate
-          path: {{ .Values.userspace.userData }}/Downloads/jDownloader2   
-        
+          path: {{ .Values.userspace.userData }}/Downloads/JDownloader2   
 
 ---
 apiVersion: v1

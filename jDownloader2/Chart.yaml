@@ -1,6 +1,6 @@
 apiVersion: v2
 appVersion: 'v24.11.1'
 description: description
-name: JDownloader2
+name: jdownloader2
 type: application
 version: '1.0.0'
