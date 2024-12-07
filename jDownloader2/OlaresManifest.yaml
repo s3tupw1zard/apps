@@ -1,0 +1,59 @@
+olaresManifest.version: '0.8.1'
+olaresManifest.type: app
+metadata:
+  name: jdownloader2
+  description: JDownloader 2 is a free, open-source download management tool with a huge community of developers that makes downloading as easy and fast as it should be.
+  icon: https://jdownloader.org/_media/vote/trazo.png
+  appid: jdownloader2
+  version: '1.0.0'
+  title: JDownloader2
+  categories:
+  - Utilities
+  - Entertainment
+permission:
+  appData: true
+  appCache: true
+  userData:
+  - Home/Downloads/JDownloader2
+spec:
+  versionName: 'v24.11.1'
+  promoteImage:
+  - https://file.bttcdn.com/appstore/deluge/promote_image_1.jpg # Need to add own images
+  fullDescription: |
+    JDownloader 2 is a free, open-source download management tool with a huge community of developers that makes downloading as easy and fast as it should be. Users can start, stop or pause downloads, set bandwith limitations, auto-extract archives and much more. It's an easy-to-extend framework that can save hours of your valuable time every day!
+
+    Visit here to learn more: https://github.com/jlesage/docker-jdownloader-2
+
+  upgradeDescription: |
+    
+  developer: jlesage
+  website: https://github.com/jlesage/docker-jdownloader-2
+  sourceCode: https://github.com/jlesage/docker-jdownloader-2
+  submitter: s3tupw1zard
+  locale:
+  - en-US
+  requiredMemory: 400Mi
+  limitedMemory: 1500Mi
+  requiredDisk: 200Mi
+  limitedDisk: 512Mi
+  requiredCpu: 0.25
+  limitedCpu: 1.0
+  doc: https://github.com/jlesage/docker-jdownloader-2?tab=readme-ov-file
+  license:
+  - text: MIT
+    url: https://github.com/jlesage/docker-jdownloader-2/blob/master/LICENSE
+  supportArch:
+  - amd64
+  - arm64
+options:
+  dependencies:
+  - name: olares
+    type: system
+    version: '>=1.10.1-0'
+entrances:
+- name: jdownloader2-svc
+  port: 5800
+  host: jdownloader2-svc
+  title: JDownloader2
+  icon: https://jdownloader.org/_media/vote/trazo.png
+  authLevel: internal

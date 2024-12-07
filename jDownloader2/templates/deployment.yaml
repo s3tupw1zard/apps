@@ -1,0 +1,138 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: jdownloader2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jdownloader2
+  template:
+    metadata:
+      labels:
+        app: jdownloader2
+    spec:
+      containers:
+      - env:
+        - name: USER_ID
+          value: "1000" 
+        - name: GROUP_ID
+          value: "1000" 
+        - name: TZ
+          value: Europe/London
+        - name: UMASK
+          value: 000
+        - name: KEEP_APP_RUNNING
+          value: 1
+        - name: CLEAN_TMP_DIR
+          value: 1
+        - name: DISPLAY_WIDTH
+          value: 1920
+        - name: DISPLAY_HEIGHT
+          value: 1080
+        name: jdownloader2
+        image: docker.io/jlesage/jdownloader-2:v24.11.1
+        resources:
+          requests:
+            cpu: 25m
+            memory: 400Mi
+          limits:
+            # cpu: 500m
+            memory: 1500Mi # extractions
+        ports:
+        - containerPort: 3129
+          protocol: TCP
+        - containerPort: 5800
+          protocol: TCP
+        - containerPort: 5900
+          protocol: UDP
+        readinessProbe:
+            httpGet:
+              path: /
+              port: web
+            initialDelaySeconds: 10
+            periodSeconds: 20
+            failureThreshold: 5
+        livenessProbe:
+          exec:
+            command:
+            - /bin/ls
+            - /output
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          failureThreshold: 5
+        volumeMounts:
+        - mountPath: /config
+          name: state
+        - mountPath: /downloads
+          subPath: Downloads/Complete
+          name: media
+        - mountPath: /mnt/mid/scratch
+          name: scratch
+        - mountPath: /output
+          name: scratch
+          subPath: JDown
+        - mountPath: /blackhole
+          subPath: Blackhole
+          name: scratch
+        securityContext:
+          runAsUser: 0
+      volumes:
+      - name: state
+        hostPath:
+          type: DirectoryOrCreate
+          path: {{ .Values.userspace.appData }}/jDownloader2
+      - name: media
+        hostPath:
+          type: DirectoryOrCreate
+          path: {{ .Values.userspace.userData }}/Downloads/jDownloader2   
+        
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Release.Name }}
+  ports:
+    - name: my-jdown
+      protocol: TCP
+      port: 3129
+      targetPort: 3129
+    - name: web
+      protocol: TCP
+      port: 5800
+      targetPort: 5800
+    - name: vnc
+      protocol: UDP
+      port: 5900
+      targetPort: 5900
+
+---
+apiVersion: sys.bytetrade.io/v1alpha1
+kind: ProviderRegistry
+metadata:
+  name: legacy-{{ .Release.Name }}
+  namespace: user-system-{{ .Values.bfl.username }}
+spec:
+  dataType: legacy_{{ .Release.Name }}
+  deployment: {{ .Release.Name }}
+  description: {{ .Release.Name }} legacy api v2
+  endpoint: {{ .Release.Name }}-svc.{{ .Release.Namespace }}:5800
+  group: api.{{ .Release.Name }}
+  kind: provider
+  namespace: {{ .Release.Namespace }}
+  version: v2
+  opApis:
+  - name: All
+    uri: /  
+status:
+  state: active
