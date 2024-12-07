@@ -1,0 +1,110 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pyload-ng
+  namespace: {{ .Release.Namespace }}
+  labels:
+    aop: pyload-ng
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pyload-ng
+  template:
+    metadata:
+      labels:
+        app: pyload-ng
+    spec:
+#      serviceAccountName: default
+#      automountServiceAccountToken: true
+#      dnsPolicy: ClusterFirst
+#      enableServiceLinks: true
+      containers:
+      - env:
+        - name: PGID
+          value: "1001"
+        - name: PUID
+          value: "1001"
+        - name: TZ
+          value: UTC
+        name: pyload-ng
+          image: "lscr.io/linuxserver/pyload-ng:0.5.0"
+        ports:
+          - name: http
+            containerPort: 8000
+            protocol: TCP
+        livenessProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 0
+          failureThreshold: 3
+          timeoutSeconds: 1
+          periodSeconds: 10
+        readinessProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 0
+          failureThreshold: 3
+          timeoutSeconds: 1
+          periodSeconds: 10
+        startupProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 0
+          failureThreshold: 30
+          timeoutSeconds: 1
+          periodSeconds: 5
+        volumeMounts:
+        - mountPath: /config
+          name: config
+        - mountPath: /downloads
+          name: downloads
+        securityContext:
+          runAsUser: 0
+        volumes:
+          - name: config
+            hostPath:
+              type: DirectoryOrCreate
+              path: {{ .Values.userspace.appData }}/pyload/config
+          - name: downloads
+            hostPath:
+              type: DirectoryOrCreate
+              path: {{ .Values.userspace.appData }}/pyload/Downloads
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-svc
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: ClusterIP
+  selector:
+    app: {{ .Release.Name }}
+  ports:
+    - name: http
+      protocol: TCP
+      port: 8000
+      targetPort: 8000
+
+---
+apiVersion: sys.bytetrade.io/v1alpha1
+kind: ProviderRegistry
+metadata:
+  name: legacy-{{ .Release.Name }}
+  namespace: user-system-{{ .Values.bfl.username }}
+spec:
+  dataType: legacy_{{ .Release.Name }}
+  deployment: {{ .Release.Name }}
+  description: {{ .Release.Name }} legacy api v2
+  endpoint: {{ .Release.Name }}-svc.{{ .Release.Namespace }}:5800
+  group: api.{{ .Release.Name }}
+  kind: provider
+  namespace: {{ .Release.Namespace }}
+  version: v2
+  opApis:
+  - name: All
+    uri: /  
+status:
+  state: active

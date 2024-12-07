@@ -1,0 +1,61 @@
+olaresManifest.version: '0.8.1'
+olaresManifest.type: app
+metadata:
+  name: pyload-ng
+  description: pyLoad is a Free and Open Source download manager written in Python and designed to be extremely lightweight, easily extensible and fully manageable via web.
+  icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/pyload-logo.png
+  appid: pyload-ng
+  version: '1.0.0'
+  title: pyLoad
+  categories:
+  - Utilities
+  - Entertainment
+permission:
+  appData: true
+  appCache: true
+  userData:
+  - Home/Downloads/pyLoad
+spec:
+  versionName: '0.5.0'
+  promoteImage:
+  - https://file.bttcdn.com/appstore/deluge/promote_image_1.jpg # Need to add own images
+  fullDescription: |
+    pyLoad is a Free and Open Source download manager written in Python and designed to be extremely lightweight, easily extensible and fully manageable via web.
+
+    ## Default Login
+    Username: pyload      Password: pyload
+
+    Please change those credentials after first login.
+#  upgradeDescription: |
+#    
+  developer: pyLoad Team
+  website: https://pyload.net/
+  sourceCode: https://github.com/pyload/pyload
+  submitter: s3tupw1zard
+  locale:
+  - en-US
+  requiredMemory: 400Mi
+  limitedMemory: 1500Mi
+  requiredDisk: 200Mi
+  limitedDisk: 512Mi
+  requiredCpu: 0.25
+  limitedCpu: 1.0
+  doc: https://github.com/pyload/pyload/wiki
+  license:
+  - text: GNU AFFERO GENERAL PUBLIC LICENSE
+    url: https://github.com/pyload/pyload/blob/develop/LICENSE.md
+  supportArch:
+  - amd64
+  - arm64
+options:
+  dependencies:
+  - name: olares
+    type: system
+    version: '>=1.10.1-0'
+entrances:
+- name: pyload-ng-svc
+  port: 8000
+  host: pyload-ng-svc
+  title: pyLoad-NG
+  icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/pyload-logo.png
+  authLevel: internal
