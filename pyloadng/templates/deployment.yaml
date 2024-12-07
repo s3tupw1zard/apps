@@ -20,11 +20,15 @@ spec:
         - name: config
           hostPath:
             type: DirectoryOrCreate
-            path: {{ .Values.userspace.userData }}/pyload/config
+            path: {{ .Values.userspace.appData }}/pyload/config
         - name: downloads
           hostPath:
             type: DirectoryOrCreate
             path: {{ .Values.userspace.userData }}/Downloads/pyload
+        - name: passwords
+          hostPath:
+            type: FileOrCreate
+            path: {{ .Values.userspace.appData }}/pyload/config/data/passwords.txt
 #      serviceAccountName: default
 #      automountServiceAccountToken: true
 #      dnsPolicy: ClusterFirst
@@ -76,6 +80,8 @@ spec:
           name: config
         - mountPath: /downloads
           name: downloads
+        - name: passwords
+          mountPath: /app/config/data/passwords.txt
         securityContext:
           runAsUser: 0
 
