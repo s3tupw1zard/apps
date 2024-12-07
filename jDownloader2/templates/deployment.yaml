@@ -53,7 +53,7 @@ spec:
         readinessProbe:
             httpGet:
               path: /
-              port: web
+              port: 5800
             initialDelaySeconds: 10
             periodSeconds: 20
             failureThreshold: 5
@@ -106,14 +106,14 @@ spec:
   selector:
     app: {{ .Release.Name }}
   ports:
-    - name: my-jdown
-      protocol: TCP
-      port: 3129
-      targetPort: 3129
     - name: web
       protocol: TCP
       port: 5800
       targetPort: 5800
+    - name: my-jdown
+      protocol: TCP
+      port: 3129
+      targetPort: 3129
     - name: vnc
       protocol: UDP
       port: 5900
