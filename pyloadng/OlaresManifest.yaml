@@ -1,10 +1,10 @@
 olaresManifest.version: '0.8.1'
 olaresManifest.type: app
 metadata:
-  name: pyload-ng
+  name: pyloadng
   description: pyLoad is a Free and Open Source download manager written in Python and designed to be extremely lightweight, easily extensible and fully manageable via web.
   icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/pyload-logo.png
-  appid: pyload-ng
+  appid: pyloadng
   version: '1.0.0'
   title: pyLoad
   categories:
@@ -53,9 +53,9 @@ options:
     type: system
     version: '>=1.10.1-0'
 entrances:
-- name: pyload-ng-svc
+- name: pyloadng-svc
   port: 8000
-  host: pyload-ng-svc
+  host: pyloadng-svc
   title: pyLoad-NG
   icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/pyload-logo.png
   authLevel: internal
