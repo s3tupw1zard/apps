@@ -89,7 +89,11 @@ spec:
       - name: media
         hostPath:
           type: DirectoryOrCreate
-          path: {{ .Values.userspace.userData }}/Downloads/JDownloader2   
+          path: {{ .Values.userspace.userData }}/Downloads/JDownloader2
+      - name: scratch
+        hostPath:  
+           type: DirectoryOrCreate
+           path: {{ .Values.userspace.userData }}/JDownloader/scratch
 
 ---
 apiVersion: v1
