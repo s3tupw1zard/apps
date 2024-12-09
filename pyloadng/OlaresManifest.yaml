@@ -6,7 +6,7 @@ metadata:
   icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/pyload-logo.png
   appid: pyloadng
   version: '1.0.0'
-  title: pyLoad
+  title: pyLoad-NG
   categories:
   - Utilities
   - Entertainment
