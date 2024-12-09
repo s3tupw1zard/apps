@@ -6,7 +6,7 @@ metadata:
   icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/pyload-logo.png
   appid: pyloadng
   version: '1.0.0'
-  title: pyLoad-NG
+  title: pyLoad-ng
   categories:
   - Utilities
   - Entertainment
@@ -59,6 +59,6 @@ entrances:
 - name: pyloadng-svc
   port: 8000
   host: pyloadng-svc
-  title: pyLoad-NG
+  title: pyLoad-ng
   icon: https://github.com/linuxserver/docker-templates/raw/master/linuxserver.io/img/pyload-logo.png
   authLevel: internal
